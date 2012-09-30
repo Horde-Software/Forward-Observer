@@ -82,9 +82,9 @@ $j(document).ready(function(){
    }
   });
   
-  $j('body div#content').on('ajax:before','[data-update]', doLoading);
+  $j('body').on('ajax:before','[data-update]', doLoading);
   
-  $j('body div#content').on('ajax:before','[data-delete]', function (evt, xhr, status){
+  $j('body').on('ajax:before','[data-delete]', function (evt, xhr, status){
     element=$j(this)
     if (element.data('loading-text')== null || element.data('loading') == null){
       element.data('loading-text', 'Deleting...')
@@ -92,50 +92,50 @@ $j(document).ready(function(){
     doLoading(evt, xhr, status);
   });
   
-  $j('body div#content').on('ajax:complete', '[data-update]', function(evt, xhr, status){
+  $j('body').on('ajax:complete', '[data-update]', function(evt, xhr, status){
     $j('#'+$j(evt.target).attr('data-update')).html(xhr.responseText);
   });
 
-  $j('body div#content').on('ajax:before','[data-append]', function (evt, xhr, status){
+  $j('body').on('ajax:before','[data-append]', function (evt, xhr, status){
     element=$j(evt.target)
     $j('#'+element.data('append')).append(loadingMessage(element))
   });
 
-  $j('body div#content').on('ajax:before','[data-prepend]', function (evt, xhr, status){
+  $j('body').on('ajax:before','[data-prepend]', function (evt, xhr, status){
     element=$j(evt.target)
     $j('#'+element.data('prepend')).prepend(loadingMessage(element))
   });
 
-  $j('body div#content').on('ajax:before','[data-before]', function (evt, xhr, status){
+  $j('body').on('ajax:before','[data-before]', function (evt, xhr, status){
     element=$j(evt.target)
     $j(loadingMessage(element)).insertBefore('#'+element.data('before'))
   });
 
-  $j('body div#content').on('ajax:before','[data-after]', function (evt, xhr, status){
+  $j('body').on('ajax:before','[data-after]', function (evt, xhr, status){
     e=$j(evt.target)
     element=loadingMessage(e)
     $j('#'+e.data('after')).after(element)
     element.show();
   });
 
-  $j('body div#content').on('ajax:complete', '[data-append]', function(evt, xhr, status){
+  $j('body').on('ajax:complete', '[data-append]', function(evt, xhr, status){
     $j('#'+$j(evt.target).attr('data-append')+' .loading').remove();
     $j('#'+$j(evt.target).attr('data-append')).append(xhr.responseText).find("[data-focus]").focus();
   });
 
-  $j('body div#content').on('ajax:complete', '[data-prepend]', function(evt, xhr, status){
+  $j('body').on('ajax:complete', '[data-prepend]', function(evt, xhr, status){
     $j('#'+$j(evt.target).attr('data-prepend')+' .loading').remove();
     $j('#'+$j(evt.target).attr('data-prepend')).prepend(xhr.responseText).find("[data-focus]").focus();
 
   });
 
-  $j('body div#content').on('ajax:complete', '[data-before]', function(evt, xhr, status){
+  $j('body').on('ajax:complete', '[data-before]', function(evt, xhr, status){
     target=$j('#'+$j(evt.target).attr('data-before'));
     target.prev(target.prop('tagName')+'.loading').remove();
     $j(xhr.responseText).insertBefore(target);
   });
 
-  $j('body div#content').on('ajax:complete', '[data-after]', function(evt, xhr, status){
+  $j('body').on('ajax:complete', '[data-after]', function(evt, xhr, status){
     source =$j(evt.target)
     target=$j('#'+source.data('after'));
 
@@ -144,17 +144,17 @@ $j(document).ready(function(){
   });
   
   
-  $j('body div#content').on('ajax:error', function(evt, xhr, status){
+  $j('body').on('ajax:error', function(evt, xhr, status){
     $j.log(status);
   });
   
-  // $j('body div#content').on('ajax:success', function(evt, xhr, status){
+  // $j('body').on('ajax:success', function(evt, xhr, status){
   //   $j.log('hi');
   // });
 
-  $j('body div#content').on('ajax:before','[data-replace]',doLoading);
+  $j('body').on('ajax:before','[data-replace]',doLoading);
   
-  $j('body div#content').on('ajax:complete','[data-replace]', function(evt, xhr, status){ 
+  $j('body').on('ajax:complete','[data-replace]', function(evt, xhr, status){ 
 
     element=$j('#'+$j(evt.target).attr('data-replace'))
     element.before(xhr.responseText);
@@ -163,31 +163,31 @@ $j(document).ready(function(){
 
   });
 
-  $j('body div#content').on('ajax:complete', 'a[data-method=delete], form[data-method=delete]', function(evt, xhr, status){ 
+  $j('body').on('ajax:complete', 'a[data-method=delete], form[data-method=delete]', function(evt, xhr, status){ 
     $j('#'+$j(evt.target).attr('data-update')).remove();
   });
   
-  $j('body div#content').on('click', 'a[data-remove]', function(evt, xhr, status){ 
+  $j('body').on('click', 'a[data-remove]', function(evt, xhr, status){ 
     $j('#'+$j(evt.target).data('remove')).remove();
     $j('#'+$j(this).data('remove')).remove();
     return false;
   });
 
-  $j('body div#content').on('click', 'a[data-handle-remote]', function(evt, xhr, status){ 
+  $j('body').on('click', 'a[data-handle-remote]', function(evt, xhr, status){ 
     $j.rails.handleRemote($j('#'+$j(evt.target).data('remove')))
     return false;
   });
   
-  $j('body div#content').on('click', 'a[data-alert]', function(evt, xhr, status){ 
+  $j('body').on('click', 'a[data-alert]', function(evt, xhr, status){ 
     alert($j(this).data('alert'));
     return false;
   });
   
-  $j('body div#content').on('ajax:complete', 'a[data-delete], form[data-delete]', function(evt, xhr, status){
+  $j('body').on('ajax:complete', 'a[data-delete], form[data-delete]', function(evt, xhr, status){
     $j('#'+$j(evt.target).attr('data-delete')).remove();
   });
   
-  $j('body div#content').on('click', 'a[data-replace][data-replace-with]', function(evt, xhr, status){
+  $j('body').on('click', 'a[data-replace][data-replace-with]', function(evt, xhr, status){
     $j('#'+$j(this).data('replace')).replaceWith($j(this).data('replace-with'))
     return false;
   });
